@@ -1,18 +1,15 @@
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
-import Button from "components/CustomButtons/Button.js";
 import GridContainer from "components/Grid/GridContainer.js";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import Snackbar from "components/Snackbar/Snackbar.js";
 import { db } from "firebase/config";
 import React from "react";
-import { Link } from "react-router-dom";
-import TableManagerCodeSale from "./TableManagerCodeSale";
+import TableManagerProduct from "./TableManagerProduct";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -45,29 +42,26 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function ManagerMGG() {
+export default function ManagerProduct() {
   const classes = useStyles();
 
-  const [listCodeSale, setListCodeSale] = React.useState([]);
+  const [listProduct, setListProduct] = React.useState([]);
   const [notify, setNotify] = React.useState(false);
+
   React.useEffect(() => {
-    db.collection("Code-Sale")
-      // .where("keywords", "array-contains", search?.toLowerCase())
+    db.collection("Products")
       .orderBy("createdAt", "desc")
       .limit(20)
       .get()
       .then((snapshot) => {
-        let codeSale = snapshot.docs.map((doc) => ({
-          code: doc.data().code,
-          priceSale: doc.data().priceSale,
-          numberCountEntered: doc.data().numberCountEntered,
-          status: doc.data().status,
-          id: doc.id,
+        let listProduct = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          idDoc: doc.id,
         }));
-        setListCodeSale(codeSale);
+        setListProduct(listProduct);
       })
       .catch((err) => {
-        console.log("Đây là Err get all code sale", err);
+        console.log("Đây là Err get all Product", err);
       });
   }, []);
 
@@ -77,8 +71,8 @@ export default function ManagerMGG() {
         <Snackbar
           place="tc"
           color="success"
-          icon={NotificationsIcon}
-          message="Xóa mã giảm giá thành công"
+          icon={AddAlert}
+          message="Xóa Sản phẩm thành công"
           open={notify}
           closeNotification={() => setNotify(false)}
           close
@@ -87,24 +81,22 @@ export default function ManagerMGG() {
         ""
       )}
       <GridItem xs={12} sm={12} md={12}>
-        <Link to="/admin/mgg/add-code-sale">
-          <Button color="primary">Thêm mã giảm giá</Button>
-        </Link>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>Danh sách mã giảm giá</h4>
             <p className={classes.cardCategoryWhite}>Thông tin mã giảm giá</p>
           </CardHeader>
           <CardBody>
-            <TableManagerCodeSale
+            <TableManagerProduct
               tableHeaderColor="primary"
-              tableHead={["Code", "Số tiền", "Số lần nhập", "Trạng thái"]}
+              tableHead={[
+                "Tên sản phẩm",
+                "Danh mục",
+                "Tên sản phẩm",
+                "Trạng thái",
+              ]}
               tableHeadAction={true}
-              tableData={listCodeSale}
-              setListCodeSale={setListCodeSale}
-              setNotify={setNotify}
+              tableData={listProduct}
             />
           </CardBody>
         </Card>

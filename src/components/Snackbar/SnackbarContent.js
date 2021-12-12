@@ -14,7 +14,7 @@ const useStyles = makeStyles(styles);
 
 export default function SnackbarContent(props) {
   const classes = useStyles();
-  const { message, color, close, icon, rtlActive } = props;
+  const { message, color, close, icon, rtlActive, setDisplay } = props;
   var action = [];
   const messageClasses = classNames({
     [classes.iconMessage]: icon !== undefined,
@@ -27,7 +27,7 @@ export default function SnackbarContent(props) {
         aria-label="Close"
         color="inherit"
       >
-        <Close className={classes.close} />
+        <Close className={classes.close} onClick={() => setDisplay(false)} />
       </IconButton>,
     ];
   }

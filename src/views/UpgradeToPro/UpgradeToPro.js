@@ -191,15 +191,6 @@ export default function UpgradeToPro() {
                         Current Version
                       </Button>
                     </td>
-                    <td className={classes.center}>
-                      <Button
-                        round
-                        color="danger"
-                        href="https://www.creative-tim.com/product/material-dashboard-pro-react?ref=mdr-upgrade-live"
-                      >
-                        Upgrade to Pro
-                      </Button>
-                    </td>
                   </tr>
                 </tbody>
               </table>

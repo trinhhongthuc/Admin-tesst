@@ -18,12 +18,11 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import BubbleChart from "@material-ui/icons/BubbleChart";
-import LocationOn from "@material-ui/icons/LocationOn";
-import Notifications from "@material-ui/icons/Notifications";
-import Unarchive from "@material-ui/icons/Unarchive";
-import Language from "@material-ui/icons/Language";
+import MenuIcon from "@material-ui/icons/Menu";
+import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
+import ImageIcon from "@material-ui/icons/Image";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
@@ -33,9 +32,16 @@ import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps/Maps.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
+
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
 import ManagerMGG from "./views/MGG/ManagerMGG";
+import ManagerBanner from "./views/ManagerBanner/ManagerBanner";
+import ManagerSlider from "views/ManagerSlider/ManagerSlider";
+import ManagerMenu from "views/ManagerMenu/ManagerMenu";
+import ManagerProduct from "./views/ManagerProduct/ManagerProduct";
+import ManagerAccount from "./views/ManagerAccount/ManagerAccount";
+import ManagerTransportMenu from "./views/ManagerTransportMenu/ManagerTransportMenu";
 
 const dashboardRoutes = [
   {
@@ -49,73 +55,65 @@ const dashboardRoutes = [
   {
     path: "/user",
     name: "Thông cá nhân",
-    rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
     component: UserProfile,
     layout: "/admin",
   },
   {
-    path: "/table",
-    name: "Table List",
-    rtlName: "قائمة الجدول",
-    icon: "content_paste",
-    component: TableList,
-    layout: "/admin",
-  },
-  {
     path: "/mgg",
     name: "Mã giảm giá",
-    rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: ManagerMGG,
     layout: "/admin",
   },
   {
-    path: "/typography",
-    name: "Typography",
-    rtlName: "طباعة",
-    icon: LibraryBooks,
-    component: Typography,
+    path: "/banner",
+    name: "Banner",
+    icon: ViewCarouselIcon,
+    component: ManagerBanner,
     layout: "/admin",
   },
   {
-    path: "/icons",
-    name: "Icons",
-    rtlName: "الرموز",
-    icon: BubbleChart,
-    component: Icons,
+    path: "/slider",
+    name: "Slider",
+    icon: ImageIcon,
+    component: ManagerSlider,
     layout: "/admin",
   },
   {
-    path: "/maps",
-    name: "Maps",
-    rtlName: "خرائط",
-    icon: LocationOn,
-    component: Maps,
+    path: "/menu",
+    name: "Danh mục",
+    icon: MenuIcon,
+    component: ManagerMenu,
     layout: "/admin",
   },
   {
-    path: "/notifications",
-    name: "Notifications",
-    rtlName: "إخطارات",
-    icon: Notifications,
+    path: "/product",
+    name: "Sản phẩm",
+    icon: CardGiftcardIcon,
+    component: ManagerProduct,
+    layout: "/admin",
+  },
+  {
+    path: "/account",
+    name: "Tài khoản",
+    icon: AccountBoxIcon,
+    component: ManagerAccount,
+    layout: "/admin",
+  },
+  {
+    path: "/transport-menu",
+    name: "Đơn hàng",
+    icon: "content_paste",
+    component: ManagerTransportMenu,
+    layout: "/admin",
+  },
+
+  {
+    path: "/dotify",
+    name: "thong bao",
+    icon: "content_paste",
     component: NotificationsPage,
-    layout: "/admin",
-  },
-  {
-    path: "/rtl-page",
-    name: "RTL Support",
-    rtlName: "پشتیبانی از راست به چپ",
-    icon: Language,
-    component: RTLPage,
-    layout: "/rtl",
-  },
-  {
-    path: "/upgrade-to-pro",
-    name: "Upgrade To PRO",
-    rtlName: "التطور للاحترافية",
-    icon: Unarchive,
-    component: UpgradeToPro,
     layout: "/admin",
   },
 ];

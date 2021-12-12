@@ -9,10 +9,10 @@ import GridContainer from "components/Grid/GridContainer.js";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import Snackbar from "components/Snackbar/Snackbar.js";
-import { db } from "firebase/config";
+import { AuthContext } from "Context/AuthProvider";
 import React from "react";
 import { Link } from "react-router-dom";
-import TableManagerCodeSale from "./TableManagerCodeSale";
+import TableManagerMenu from "./TableManagerMenu";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -45,31 +45,11 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function ManagerMGG() {
+export default function ManagerMenu() {
   const classes = useStyles();
 
-  const [listCodeSale, setListCodeSale] = React.useState([]);
   const [notify, setNotify] = React.useState(false);
-  React.useEffect(() => {
-    db.collection("Code-Sale")
-      // .where("keywords", "array-contains", search?.toLowerCase())
-      .orderBy("createdAt", "desc")
-      .limit(20)
-      .get()
-      .then((snapshot) => {
-        let codeSale = snapshot.docs.map((doc) => ({
-          code: doc.data().code,
-          priceSale: doc.data().priceSale,
-          numberCountEntered: doc.data().numberCountEntered,
-          status: doc.data().status,
-          id: doc.id,
-        }));
-        setListCodeSale(codeSale);
-      })
-      .catch((err) => {
-        console.log("Đây là Err get all code sale", err);
-      });
-  }, []);
+  const { listMenu, setListMenu } = React.useContext(AuthContext);
 
   return (
     <GridContainer>
@@ -78,7 +58,7 @@ export default function ManagerMGG() {
           place="tc"
           color="success"
           icon={NotificationsIcon}
-          message="Xóa mã giảm giá thành công"
+          message="Xóa Menu thành công"
           open={notify}
           closeNotification={() => setNotify(false)}
           close
@@ -87,24 +67,24 @@ export default function ManagerMGG() {
         ""
       )}
       <GridItem xs={12} sm={12} md={12}>
-        <Link to="/admin/mgg/add-code-sale">
-          <Button color="primary">Thêm mã giảm giá</Button>
+        <Link to="/admin/menu/add-menu">
+          <Button color="primary">Thêm Menu</Button>
         </Link>
       </GridItem>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Danh sách mã giảm giá</h4>
-            <p className={classes.cardCategoryWhite}>Thông tin mã giảm giá</p>
+            <h4 className={classes.cardTitleWhite}>Danh sách Menu sản phẩm</h4>
+            <p className={classes.cardCategoryWhite}>Thông tin Menu</p>
           </CardHeader>
           <CardBody>
-            <TableManagerCodeSale
+            <TableManagerMenu
               tableHeaderColor="primary"
-              tableHead={["Code", "Số tiền", "Số lần nhập", "Trạng thái"]}
+              tableHead={["Tên menu", "Hình ảnh", "Danh mục cha", "Trạng thái"]}
               tableHeadAction={true}
-              tableData={listCodeSale}
-              setListCodeSale={setListCodeSale}
+              tableData={listMenu}
               setNotify={setNotify}
+              setListMenu={setListMenu}
             />
           </CardBody>
         </Card>

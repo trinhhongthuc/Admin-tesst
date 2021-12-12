@@ -12,7 +12,7 @@ import Snackbar from "components/Snackbar/Snackbar.js";
 import { db } from "firebase/config";
 import React from "react";
 import { Link } from "react-router-dom";
-import TableManagerCodeSale from "./TableManagerCodeSale";
+import TableManagerSlide from "./TableManagerSlide";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -45,31 +45,29 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function ManagerMGG() {
+export default function ManagerSlider() {
   const classes = useStyles();
 
-  const [listCodeSale, setListCodeSale] = React.useState([]);
+  const [listSlide, setListSlide] = React.useState([]);
   const [notify, setNotify] = React.useState(false);
   React.useEffect(() => {
-    db.collection("Code-Sale")
-      // .where("keywords", "array-contains", search?.toLowerCase())
+    db.collection("Slide")
       .orderBy("createdAt", "desc")
       .limit(20)
       .get()
       .then((snapshot) => {
         let codeSale = snapshot.docs.map((doc) => ({
-          code: doc.data().code,
-          priceSale: doc.data().priceSale,
-          numberCountEntered: doc.data().numberCountEntered,
+          image: doc.data().image,
           status: doc.data().status,
+          nameSlide: doc.data().nameSlide,
           id: doc.id,
         }));
-        setListCodeSale(codeSale);
+        setListSlide(codeSale);
       })
       .catch((err) => {
-        console.log("Đây là Err get all code sale", err);
+        console.log("Đây là Err get all Slide", err);
       });
-  }, []);
+  }, [setListSlide, listSlide]);
 
   return (
     <GridContainer>
@@ -78,7 +76,7 @@ export default function ManagerMGG() {
           place="tc"
           color="success"
           icon={NotificationsIcon}
-          message="Xóa mã giảm giá thành công"
+          message="Xóa Slide thành công"
           open={notify}
           closeNotification={() => setNotify(false)}
           close
@@ -87,24 +85,24 @@ export default function ManagerMGG() {
         ""
       )}
       <GridItem xs={12} sm={12} md={12}>
-        <Link to="/admin/mgg/add-code-sale">
-          <Button color="primary">Thêm mã giảm giá</Button>
+        <Link to="/admin/slide/add-slide">
+          <Button color="primary">Thêm Slide</Button>
         </Link>
       </GridItem>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Danh sách mã giảm giá</h4>
-            <p className={classes.cardCategoryWhite}>Thông tin mã giảm giá</p>
+            <h4 className={classes.cardTitleWhite}>Danh sách Slide</h4>
+            <p className={classes.cardCategoryWhite}>Thông tin Slide</p>
           </CardHeader>
           <CardBody>
-            <TableManagerCodeSale
+            <TableManagerSlide
               tableHeaderColor="primary"
-              tableHead={["Code", "Số tiền", "Số lần nhập", "Trạng thái"]}
+              tableHead={["Hình ảnh", "Tên Slide", "Trạng thái"]}
               tableHeadAction={true}
-              tableData={listCodeSale}
-              setListCodeSale={setListCodeSale}
+              tableData={listSlide}
               setNotify={setNotify}
+              setListSlide={setListSlide}
             />
           </CardBody>
         </Card>
